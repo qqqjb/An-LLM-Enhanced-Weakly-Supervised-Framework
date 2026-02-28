@@ -10,7 +10,6 @@ from timm.models.layers import DropPath, to_2tuple, trunc_normal_
 from clip import clip
 from utils.layers import GraphConvolution, DistanceAdj
 
-#SCLCLIP
 
 class LayerNorm(nn.LayerNorm):
 
