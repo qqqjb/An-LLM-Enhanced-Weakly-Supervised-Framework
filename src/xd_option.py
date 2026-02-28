@@ -1,8 +1,6 @@
 import argparse
 
-#sclclip
-
-parser = argparse.ArgumentParser(description='VadCLIP')
+parser = argparse.ArgumentParser(description='SL-CLIP')
 parser.add_argument('--seed', default=234, type=int)
 
 parser.add_argument('--embed-dim', default=512, type=int)
