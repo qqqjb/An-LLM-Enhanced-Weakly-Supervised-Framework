@@ -19,7 +19,6 @@ class LayerNorm(nn.LayerNorm):
         return ret.type(orig_type)
 
 
-#GELU激活函数的快速实现
 class QuickGELU(nn.Module):
     def forward(self, x: torch.Tensor):
         return x * torch.sigmoid(1.702 * x)
@@ -170,14 +169,12 @@ class SwinTransformerBlock(nn.Module):
         x = self.norm1(x)
         x = x.view(B, H, W, C)
 
-        # pad feature maps to multiples of window size
         pad_l = pad_t = 0
         pad_r = (self.window_size - W % self.window_size) % self.window_size
         pad_b = (self.window_size - H % self.window_size) % self.window_size
         x = F.pad(x, (0, 0, pad_l, pad_r, pad_t, pad_b))
         _, Hp, Wp, _ = x.shape
 
-        # cyclic shift
         if self.shift_size > 0:
             shifted_x = torch.roll(x, shifts=(-self.shift_size, -self.shift_size), dims=(1, 2))
             attn_mask = mask_matrix
@@ -185,18 +182,14 @@ class SwinTransformerBlock(nn.Module):
             shifted_x = x
             attn_mask = None
 
-        # partition windows
         x_windows = window_partition(shifted_x, self.window_size)  # nW*B, window_size, window_size, C
         x_windows = x_windows.view(-1, self.window_size * self.window_size, C)  # nW*B, window_size*window_size, C
 
-        # W-MSA/SW-MSA
         attn_windows = self.attn(x_windows, mask=attn_mask)  # nW*B, window_size*window_size, C
 
-        # merge windows
         attn_windows = attn_windows.view(-1, self.window_size, self.window_size, C)
         shifted_x = window_reverse(attn_windows, self.window_size, Hp, Wp)  # B H' W' C
 
-        # reverse cyclic shift
         if self.shift_size > 0:
             x = torch.roll(shifted_x, shifts=(self.shift_size, self.shift_size), dims=(1, 2))
         else:
@@ -207,7 +200,6 @@ class SwinTransformerBlock(nn.Module):
 
         x = x.view(B, H * W, C)
 
-        # FFN
         x = shortcut + self.drop_path(x)
         x = x + self.drop_path(self.mlp(self.norm2(x)))
 
@@ -226,7 +218,6 @@ class SwinTransformer(nn.Module):
             x = layer(x, attn_mask)
         return x
 
-#包含视频和文本编码器以及各种网络层
 class CLIPVAD(nn.Module):
     def __init__(self,
                  num_class: int,
@@ -249,13 +240,11 @@ class CLIPVAD(nn.Module):
         self.prompt_prefix = prompt_prefix
         self.prompt_postfix = prompt_postfix
         
-        # 添加投影层，将视觉特征从 visual_width(512) 投影到 embed_dim(768)
         self.visual_to_text_proj = nn.Linear(self.visual_width, self.embed_dim)
         self.text_to_visual_proj = nn.Linear(self.embed_dim, self.visual_width)
     
         self.device = device
 
-#self.temporal是一个SwinTransformer实例,用于处理时间序列数据
         self.temporal = SwinTransformer(
             dim=visual_width,
             num_heads=visual_head,
@@ -299,17 +288,13 @@ class CLIPVAD(nn.Module):
             nn.Linear(visual_width // 16, visual_width),
             nn.Sigmoid()
         )
-        # 初始化文本提示和帧位置嵌入的权重，使用标准差为0.01的正态分布
 
     def initialize_parameters(self):
         nn.init.normal_(self.text_prompt_embeddings.weight, std=0.01)
         nn.init.normal_(self.frame_position_embeddings.weight, std=0.01)
 
-        # 构建注意力掩码，控制注意力机制的范围
 
     def build_attention_mask(self, attn_window):
-        # lazily create causal attention mask, with full attention between the vision tokens
-        # pytorch uses additive attention mask; fill with -inf
         mask = torch.empty(self.visual_length, self.visual_length)
         mask.fill_(float('-inf'))
         for i in range(int(self.visual_length / attn_window)):
@@ -320,31 +305,6 @@ class CLIPVAD(nn.Module):
 
         return mask
 
-        # 计算输入特征的邻接矩阵，用于图卷积操作
-
-    # def adj4(self, x, seq_len):
-    #     soft = nn.Softmax(1)
-    #     x2 = x.matmul(x.permute(0, 2, 1))  # B*T*T
-    #     x_norm = torch.norm(x, p=2, dim=2, keepdim=True)  # B*T*1
-    #     x_norm_x = x_norm.matmul(x_norm.permute(0, 2, 1))
-    #     x2 = x2 / (x_norm_x + 1e-20)
-    #     output = torch.zeros_like(x2)
-    #     if seq_len is None:
-    #         for i in range(x.shape[0]):
-    #             tmp = x2[i]
-    #             adj2 = tmp
-    #             adj2 = F.threshold(adj2, 0.7, 0)
-    #             adj2 = soft(adj2)
-    #             output[i] = adj2
-    #     else:
-    #         for i in range(len(seq_len)):
-    #             tmp = x2[i, :seq_len[i], :seq_len[i]]
-    #             adj2 = tmp
-    #             adj2 = F.threshold(adj2, 0.7, 0)
-    #             adj2 = soft(adj2)
-    #             output[i, :seq_len[i], :seq_len[i]] = adj2
-    #
-    #     return output
 
     def adj4(self, x, seq_len):
         soft = nn.Softmax(1)
@@ -432,12 +392,8 @@ class CLIPVAD(nn.Module):
         text_features_norm = text_features_projected / text_features_projected.norm(dim=-1, keepdim=True)
         text_features_norm = text_features_norm.permute(0, 2, 1)
         
-        # 确保数据类型匹配
         text_features_norm = text_features_norm.to(visual_features_norm.dtype)
         
-        # 添加调试信息
-        # print(f"Before matmul - visual_features_norm: {visual_features_norm.shape}, dtype: {visual_features_norm.dtype}")
-        # print(f"Before matmul - text_features_norm: {text_features_norm.shape}, dtype: {text_features_norm.dtype}")
         
         logits2 = visual_features_norm @ text_features_norm / 0.07
     
