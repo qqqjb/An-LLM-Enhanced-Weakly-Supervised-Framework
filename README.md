@@ -1,7 +1,7 @@
 # An-LLM-Enhanced-Weakly-Supervised-Framework
 
 This is the implementation of our paper:
-**"Enhancing Weakly Supervised Video Anomaly Detection via Spatiotemporal Context Modeling and Multi-Perspective Semantic Label Generation"**
+**"An LLM-Enhanced Weakly Supervised Framework for Securing Video Anomaly Detection in Consumer Devices"**
 
 
 ## Highlights
@@ -21,8 +21,8 @@ We extract CLIP features for UCF-Crime and XD-Violence datasets from [VadCLIP](h
 
 | Benchmark | CLIP]    | Model | 
 |--------|----------|-----------|
-| UCF-Crime   | [Code: 7yzp](https://pan.baidu.com/s/1OKRIxoLcxt-7RYxWpylgLQ) | [OneDrive](https://1drv.ms/u/c/0cc64fe06001c8e6/IQAGlA9x6LC-R4eELzHRuzQ6ARC6ESkceK8IAu_IhLQBlUI?e=bR4iAH)     |
-| XD-Violence | [Code: v8tw](https://pan.baidu.com/s/1q8DiYHcPJtrBQiiJMI7aJw)| [OneDrive](https://1drv.ms/u/c/0cc64fe06001c8e6/IQDv64IsPxzFSoyTBqt2YzyxAUJY0vtgBXcBLv8X8gqb99A?e=70OQQ6)      |
+| UCF-Crime   | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:u:/g/personal/pengwu_stu_xidian_edu_cn/Ea86YOcp5z9KhRFDQm9a8zwBcGiGGg5BuBJtgmCVByazBQ?e=tqHLHt) | [OneDrive](https://1drv.ms/u/c/0cc64fe06001c8e6/IQAGlA9x6LC-R4eELzHRuzQ6ARC6ESkceK8IAu_IhLQBlUI?e=bR4iAH)     |
+| XD-Violence | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:f:/g/personal/pengwu_stu_xidian_edu_cn/Et5dWQZb2cBDs7zsrp90SrQBL_52vTRNYTdjQW6SMl0ZVA?e=foX4ph)| [OneDrive](https://1drv.ms/u/c/0cc64fe06001c8e6/IQDv64IsPxzFSoyTBqt2YzyxAUJY0vtgBXcBLv8X8gqb99A?e=70OQQ6)      |
 
 The following files need to be adapted in order to run the code on your own machine:
 - Change the file paths to the download datasets above in `list/xd_CLIP_rgb.csv` and `list/xd_CLIP_rgbtest.csv`. 
