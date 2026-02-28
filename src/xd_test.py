@@ -12,7 +12,6 @@ from utils.xd_detectionMAP import getDetectionMAP as dmAP
 import xd_option
 import time
 
-#原test.py SCLCLIP
 
 def test(model, testdataloader, maxlen, prompt_text, gt, gtsegments, gtlabels, device):
     
