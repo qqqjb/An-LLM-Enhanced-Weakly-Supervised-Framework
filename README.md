@@ -26,7 +26,6 @@ We extract CLIP features for UCF-Crime and XD-Violence datasets from [VadCLIP](h
 
 The following files need to be adapted in order to run the code on your own machine:
 - Change the file paths to the download datasets above in `list/xd_CLIP_rgb.csv` and `list/xd_CLIP_rgbtest.csv`. 
-- Feel free to change the hyperparameters in `xd_option.py` and `ucf_option.py`
 
 ### Train and Test
 After the setup, simply run the following command: 
@@ -43,19 +42,3 @@ python ucf_train.py
 python ucf_test.py
 ```
 
-## Acknowledgments
-We thank the authors of [VadCLIP](https://github.com/nwpu-zxr/VadCLIP) for providing the pre-extracted CLIP features.
-
-## Citation
-
-If you find this repo useful for your research, please consider citing our paper:
-
-```bibtex
-@article{scat_mpslg_2025,
-  title={Enhancing Weakly Supervised Video Anomaly Detection via Spatiotemporal Context Modeling and Multi-Perspective Semantic Label Generation},
-  author={Your Name},
-  journal={Conference/Journal Name},
-  year={2025}
-}
-```
-```
