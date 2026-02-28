@@ -19,7 +19,7 @@ This is the implementation of our paper:
 ### Setup
 We extract CLIP features for UCF-Crime and XD-Violence datasets from [VadCLIP](https://github.com/nwpu-zxr/VadCLIP). Download these features using the links below:
 
-| Benchmark | CLIP]    | Model | 
+| Benchmark | CLIP    | Model | 
 |--------|----------|-----------|
 | UCF-Crime   | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:u:/g/personal/pengwu_stu_xidian_edu_cn/Ea86YOcp5z9KhRFDQm9a8zwBcGiGGg5BuBJtgmCVByazBQ?e=tqHLHt) | [OneDrive](https://1drv.ms/u/c/0cc64fe06001c8e6/IQAGlA9x6LC-R4eELzHRuzQ6ARC6ESkceK8IAu_IhLQBlUI?e=bR4iAH)     |
 | XD-Violence | [OneDrive](https://stuxidianeducn-my.sharepoint.com/:f:/g/personal/pengwu_stu_xidian_edu_cn/Et5dWQZb2cBDs7zsrp90SrQBL_52vTRNYTdjQW6SMl0ZVA?e=foX4ph)| [OneDrive](https://1drv.ms/u/c/0cc64fe06001c8e6/IQDv64IsPxzFSoyTBqt2YzyxAUJY0vtgBXcBLv8X8gqb99A?e=70OQQ6)      |
