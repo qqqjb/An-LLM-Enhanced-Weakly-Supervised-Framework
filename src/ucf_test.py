@@ -11,8 +11,6 @@ from utils.tools import get_batch_mask, get_prompt_text
 from utils.ucf_detectionMAP import getDetectionMAP as dmAP
 import ucf_option
 
-#sclclip
-
 
 def test(model, testdataloader, maxlen, prompt_text, gt, gtsegments, gtlabels, device):
     
