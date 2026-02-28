@@ -12,7 +12,6 @@ from utils.dataset import XDDataset
 from utils.tools import get_prompt_text, get_batch_label
 import xd_option
 
-#SCLCLIP
 
 def CLASM(logits, labels, lengths, device):
     instance_logits = torch.zeros(0).to(device)
