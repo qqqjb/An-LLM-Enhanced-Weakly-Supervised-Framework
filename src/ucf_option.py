@@ -1,7 +1,5 @@
 import argparse
 
-#sclclip
-
 parser = argparse.ArgumentParser(description='VadCLIP')
 parser.add_argument('--seed', default=234, type=int)
 
