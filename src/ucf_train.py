@@ -14,7 +14,6 @@ from utils.dataset import UCFDataset
 from utils.tools import get_prompt_text, get_batch_label
 import ucf_option
 
-#sclclip
 
 def CLASM(logits, labels, lengths, device):
     instance_logits = torch.zeros(0).to(device)
