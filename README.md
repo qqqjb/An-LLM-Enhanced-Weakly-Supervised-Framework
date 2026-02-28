@@ -1,6 +1,6 @@
 # An-LLM-Enhanced-Weakly-Supervised-Framework
 
-This is the official PyTorch implementation of our paper:
+This is the implementation of our paper:
 **"Enhancing Weakly Supervised Video Anomaly Detection via Spatiotemporal Context Modeling and Multi-Perspective Semantic Label Generation"**
 
 
